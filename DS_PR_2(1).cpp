@@ -1,54 +1,68 @@
-#include <iostream> 
-using namespace std; 
-int main () { 
-    	int player1[5]; 
-  	int player2[5]; 
-   	int a; 
-    	cout << "Enter the scores of 5 rounds for Player 1: " << endl; 
-    	for (int i=0; i < 5; i++) { 
-        	cin >> player1[i]; 
-    	}  
-    	cout << "\n\nEnter scores of 5 rounds for Player 2: " << endl; 
-    	for (int i=0; i < 5; i++) { 
-        	cin >> player2[i]; 
-    	} 
-    	for (int pass=0; pass < 5; pass++) { 
-        	for (int i=0; i < (5-pass-1); i++) { 
-            		if (player1[i] < player1[i+1]) { 
-                			a = player1[i]; 
-                			player1[i] = player1[i+1]; 
-                			player1[i+1] = a; 
-            		} 
-        	} 
-   	 } 
-    	for (int pass=0; pass < 5; pass++) { 
-       		for (int i=0; i < (5-pass-1); i++) { 
-            		if (player2[i] < player2[i+1]) { 
-                			a = player2[i]; 
-                			player2[i] = player2[i+1]; 
-                			player2[i+1] = a; 
-            		} 
-        	} 
-    	} 
-    	cout << "Swapping scores and leveling up!!!" << endl; 
-    	cout << "Scores have been swapped!" << endl; 
-    	cout << "The sorted scores are: " << endl; 
-    	cout << "Scores of Player 1: "; 
-    	for (int i=0; i < 5; i++) { 
-       	 	cout << player1[i] << ", "; 
-    	} 
-    	cout << endl; 
-    	cout << "Scores of Player 2: "; 
-    	for (int i=0; i < 5; i++) { 
-        	cout << player2[i] << ", "; 
-    	} 
-    	cout << endl; 
-    	if (player1[0] > player2[0]) { 
-       	 	cout << "Player 1 is the winner!" << endl; 
-    	} else if (player2[0] > player1[0]) { 
-        	cout << "Player 2 is the winner!" << endl; 
-    	}  else { 
-       		 cout << "Its a tie!" << endl; 
-    	} 
-    	return 0; 
-} 
+#include <iostream>
+using namespace std;
+
+int main() {
+    int n;
+    cout << "Enter the number of scores for each player: ";
+    cin >> n;
+
+    int player1[n], player2[n];
+
+    cout << "Enter the scores for Player 1:\n";
+    for (int i = 0; i < n; i++) {
+        cin >> player1[i];
+    }
+
+    cout << "\nEnter the scores for Player 2:\n";
+    for (int i = 0; i < n; i++) {
+        cin >> player2[i];
+    }
+
+    // Bubble sort in descending order for Player 1
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (player1[j] < player1[j + 1]) {
+                int temp = player1[j];
+                player1[j] = player1[j + 1];
+                player1[j + 1] = temp;
+            }
+        }
+    }
+
+    // Bubble sort in descending order for Player 2
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (player2[j] < player2[j + 1]) {
+                int temp = player2[j];
+                player2[j] = player2[j + 1];
+                player2[j + 1] = temp;
+            }
+        }
+    }
+
+    // Display sorted scores
+    cout << "\nSorted scores:\n";
+    cout << "Player 1: ";
+    for (int i = 0; i < n; i++) {
+        cout << player1[i] << " ";
+    }
+
+    cout << "\nPlayer 2: ";
+    for (int i = 0; i < n; i++) {
+        cout << player2[i] << " ";
+    }
+    cout << endl;
+
+    // Compare highest scores
+    if (player1[0] > player2[0]) {
+        cout << "\nPlayer 1 is the winner!" << endl;
+    } 
+    else if (player2[0] > player1[0]) {
+        cout << "\nPlayer 2 is the winner!" << endl;
+    } 
+    else {
+        cout << "\nIt's a tie!" << endl;
+    }
+
+    return 0;
+}
