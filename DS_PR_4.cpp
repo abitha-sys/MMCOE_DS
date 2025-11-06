@@ -1,69 +1,66 @@
 #include <iostream>
 #include <string>
 using namespace std;
+
 struct Task {
- string name;
- int priority;
- int execTime;
- Task* next;
- Task(const string& n, int p, int e) : name(n), priority(p), execTime(e), next(nullptr) {}
+    string name;
+    int priority;
+    int time;
+    Task* next;
 };
-class TaskScheduler
-{
-private:
- Task* head;
-public:
- TaskScheduler() : head(nullptr) {}
- ~TaskScheduler() {
- while (head) {
- Task* temp = head;
- head = head->next;
- delete temp;
- }
- }
- void addTask(const string& name, int priority, int execTime) {
- Task* newTask = new Task(name, priority, execTime);
- if (!head || head->priority < priority) {
- newTask->next = head;
- head = newTask;
- } else {
- Task* current = head;
- while (current->next && current->next->priority >= priority) {
- current = current->next;
- }
- newTask->next = current->next;
- current->next = newTask;
- }
- }
- void executeTasks() {
- Task* current = head;
- while (current) {
- cout << "task: " << current->name
- << " priority: " << current->priority
- << " time: " << current->execTime << " units\n";
- current = current->next;
- }
- }
-};
+
+Task* head = NULL;
+
+void addTask(string name, int priority, int time) {
+    Task* newTask = new Task;
+    newTask->name = name;
+    newTask->priority = priority;
+    newTask->time = time;
+    newTask->next = NULL;
+
+    if (head == NULL || priority < head->priority) {
+        newTask->next = head;
+        head = newTask;
+    } else {
+        Task* temp = head;
+        while (temp->next != NULL && temp->next->priority <= priority) {
+            temp = temp->next;
+        }
+        newTask->next = temp->next;
+        temp->next = newTask;
+    }
+}
+
+void showTasks() {
+    Task* temp = head;
+    cout << "\nTasks in order of execution:\n";
+    while (temp != NULL) {
+        cout << "Task Name: " << temp->name
+             << " | Priority: " << temp->priority
+             << " | Time: " << temp->time << endl;
+        temp = temp->next;
+    }
+}
+
 int main() {
- TaskScheduler scheduler;
- int n;
- cout << "How many tasks do you want to enter? ";
- cin >> n;
- cin.ignore();
- for (int i = 0; i < n; ++i) {
- string name;
- int priority, execTime;
- cout << "Enter task " << i + 1 << " name: ";
- getline(cin, name);
- cout << "Enter task " << i + 1 << " priority: ";
- cin >> priority;
- cout << "Enter task " << i + 1 << " execution time: ";
- cin >> execTime;
- cin.ignore();
- scheduler.addTask(name, priority, execTime);
- }
- cout << "\nScheduled Tasks in order of execution:\n";
- scheduler.executeTasks();
- return 0;
+    int n;
+    cout << "How many tasks do you want to enter? ";
+    cin >> n;
+
+    for (int i = 0; i < n; i++) {
+        string name;
+        int priority, time;
+        cout << "\nEnter task " << i + 1 << " details:\n";
+        cout << "Task Name: ";
+        cin >> name;
+        cout << "Priority: ";
+        cin >> priority;
+        cout << "Time: ";
+        cin >> time;
+
+        addTask(name, priority, time);
+    }
+
+    showTasks();
+    return 0;
 }
