@@ -31,6 +31,7 @@ int main() {
     }
 
     // Bubble sort in descending order for Player 2
+    cout << "\nSorting... Leveling up Player 2!\n";
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n - i - 1; j++) {
             if (player2[j] < player2[j + 1]) {
